@@ -13,13 +13,17 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        self.vertices[vertex]=set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        if self.vertices.get(v1) == None:
+            raise IndexError(f'{v1} not in graph')
+        if self.vertices.get(v2) == None:
+            raise IndexError(f'{v2} not in graph')
+        self.vertices[v1].add(v2)
 
     def get_neighbors(self, vertex_id):
         """
@@ -32,7 +36,6 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
 
     def dft(self, starting_vertex):
         """
