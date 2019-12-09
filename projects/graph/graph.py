@@ -36,13 +36,36 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-
+        temp = Queue()
+        temp.enqueue(starting_vertex)
+        done=[starting_vertex]
+        print('bft')
+        while temp.size()>0:
+            current = temp.dequeue()
+            done.append(current)
+            for node in self.vertices[current]:
+                if not node in done:
+                    temp.enqueue(node)
+                    done.append(node)
+            print(current)
+            
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        temp = Stack()
+        temp.push(starting_vertex)
+        done=[starting_vertex]
+        print('dft')
+        while temp.size() >0:
+            current = temp.pop()
+            for node in self.vertices[current]:
+                if not node in done:
+                    temp.push(node)
+                    done.append(node)
+            print(current)
+
 
     def dft_recursive(self, starting_vertex):
         """
