@@ -9,7 +9,7 @@ class Graph:
     def __init__(self):
         self.vertices = {}
 
-    def add_vertex(self, vertex_id):
+    def add_vertex(self, vertex):
         """
         Add a vertex to the graph.
         """
@@ -67,14 +67,27 @@ class Graph:
             print(current)
 
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, done = None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
+        if not starting_vertex:
+            return
+
+        if not done:
+            done=[starting_vertex]
+            print('Recursive DFT')
+        else:
+            done.append(starting_vertex)
+
+        print(starting_vertex)
+        for node in self.vertices.get(starting_vertex):
+            if not node in done:
+                self.dft_recursive(node,done)
+
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -82,7 +95,29 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        temp = Queue()
+        temp.enqueue(starting_vertex)
+        done=[]
+        path={
+            starting_vertex:'start'
+        }
+        print(f'pathing from {starting_vertex} to {destination_vertex}: BFS')
+        while temp.size()>0:
+            current = temp.dequeue()
+            if current==destination_vertex:
+                ret = f''
+                while path.get(current) is not 'start':
+                    ret = f'{current} {ret}'
+                    current=path.get(current)
+                return f'{starting_vertex} {ret}'
+            else:
+                for node in self.vertices.get(current):
+                    if not node in done:
+                        temp.enqueue(node)
+                        done.append(node)
+                    if not path.get(node,None):
+                        path[node]=current
+
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -90,7 +125,31 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        temp = Stack()
+        temp.push(starting_vertex)
+        done=[]
+        path={
+            starting_vertex:'start'
+        }
+        print(f'pathing from {starting_vertex} to {destination_vertex}: DFS')
+        while temp.size()>0:
+            current = temp.pop()
+            if current==destination_vertex:
+                ret = f''
+                while path.get(current) is not 'start':
+                    ret = f'{current} {ret}'
+                    current=path.get(current)
+                return f'{starting_vertex} {ret}'
+            else:
+                for node in self.vertices.get(current):
+                    if not node in done:
+                        temp.push(node)
+                        done.append(node)
+                    if not path.get(node,None):
+                        path[node]=current
+
+
+        print('Not a Vertex/no path')
 
     def dfs_recursive(self, starting_vertex):
         """
@@ -168,4 +227,4 @@ if __name__ == '__main__':
         [1, 2, 4, 7, 6]
     '''
     print(graph.dfs(1, 6))
-    print(graph.dfs_recursive(1, 6))
+    print(graph.dfs_recursive(6))
